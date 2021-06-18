@@ -1,27 +1,33 @@
 import './App.css';
-import firebase from 'firebase/app'
 import SignIn from './Components/Auth/SignIn';
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import rootReducer from './redux/reducers'
+import thunk from 'redux-thunk'
+import { BrowserRouter, Route } from "react-router-dom";
+import MainPageContsiner from './Components/MainPage/MainPageContainer';
+import '@splidejs/splide/dist/css/themes/splide-default.min.css';
+import SignUp from './Components/Registration/SignUp';
 
-const store = createStore(rootReducer)
-
-const handelSignOut = async () => {
-    await firebase.auth().signOut();
-    window.location.reload();
-}
+const store = createStore(rootReducer, applyMiddleware(thunk))
 
 function App() {
     return (
         <Provider store={store}>
-            <div className="App">
-                {/* <LoginContainer /> */}
-                <SignIn>
-                    <div>lololololol</div>
-                    <button onClick={() => { handelSignOut() }}>SignOut</button>
-                </SignIn>
-            </div>
+            <BrowserRouter>
+                <div className="App">
+                    <Route exact path="/" render={() => (
+                        <MainPageContsiner />
+                    )} />
+                    <Route path='/signUp' render={() => (
+                        <SignUp />
+                    )} />
+                    <Route path='/signIn' render={() => (
+                        <SignIn />
+                    )} />
+
+                </div>
+            </BrowserRouter>
         </Provider>
     );
 }

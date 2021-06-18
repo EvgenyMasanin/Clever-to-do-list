@@ -1,46 +1,66 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import { NavLink } from 'react-router-dom';
 
-class Login extends React.Component {
-    constructor(props) {
-        super(props)
-        this.onChangeEmail = this.onChangeEmail.bind(this)
-        this.onChangePassword = this.onChangePassword.bind(this)
+const Login = props => {
+
+    const onChangeEmail = (event) => {
+        props.setEmail(event.target.value)
     }
 
-    onChangeEmail(event) {
-        this.props.setEmail(event.target.value)
+    const onChangePassword = (event) => {
+        props.setPassword(event.target.value)
     }
 
-    onChangePassword(event) {
-        this.props.setPassword(event.target.value)
-    }
-
-    render() {
-        return (
-            <div>
-                <h2>Authorization</h2>
-                <p>Enter login and password</p>
-                <div>
-                    <input type="text" placeholder='Email'
-                        value={this.props.email}
-                        onChange={this.onChangeEmail}
+    return (
+        // style = {{ display: 'flex', justifyContent: 'center' }
+        <form className='entryForm'>
+            {/* <div style={{}}> */}
+            <Grid container direction="column" spacing={1} alignItems="center">
+                <Grid item>
+                    <TextField
+                        value={props.email}
+                        onChange={onChangeEmail}
+                        type="text"
+                        label="Enter email"
+                        autoComplete="email"
                     />
-                </div>
-                <div>
-                    <input type="text" placeholder='Passord'
-                        value={this.props.password}
-                        onChange={this.onChangePassword} />
-                </div>
-                {/* () => this.props.authenticate() */}
-                <button onClick={() => this.props.authenticate(this.props.email, this.props.password)}>Login</button>
-                {/* <button onClick={this.onChangeEmail}>Login</button> */}
-            </div>
-        )
-    }
+                </Grid>
+                <Grid item>
+                    <TextField
+                        value={props.password}
+                        onChange={onChangePassword}
+                        type="password"
+                        label="Enter password"
+                        autoComplete="current-password"
+                    />
+                </Grid>
+                <Grid item>
+                    <NavLink
+                        to="/signUp"
+                        style={{ textDecoration: 'none', marginRight: '10px' }}
+                    >
+                        <Button
+                            variant="contained"
+                            color="primary"
+                        >
+                            Sign up
+                        </Button>
+                    </NavLink>
+
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        // onClick={() => props.authenticate(props.email, props.password)}>
+                        onClick={() => props.setUser(props.email, props.password)}>
+                        Login
+                    </Button>
+                </Grid>
+            </Grid>
+        </form >
+    )
 }
-Login.propTypes = {
-    authenticate: PropTypes.func.isRequired
-};
 
 export default Login;

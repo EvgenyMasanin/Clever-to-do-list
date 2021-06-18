@@ -1,26 +1,25 @@
 import React from 'react';
-import LoginContainer from './LoginContainer';
+import RegistrationContainer from './RegistrationContainer';
 import { connect } from 'react-redux';
 import { Redirect } from "react-router-dom";
 
-const SignIn = (props) => {
-
+const SignUp = (props) => {
     return (
         props.isSignedIn ? (
             <Redirect to="/" />
         ) : (
-            <LoginContainer />
+            <RegistrationContainer />
         )
     )
 }
 
 const mapStateToProvider = state => {
     return {
-        user: state.auth.user,
-        isSignedIn: state.auth.isSignedIn
+        user: state.registration.user,
+        isSignedIn: state.registration.isSignedIn,
     }
 }
 
-export default connect(mapStateToProvider)(SignIn);
+export default connect(mapStateToProvider)(SignUp);
 
 // export default SignIn;
