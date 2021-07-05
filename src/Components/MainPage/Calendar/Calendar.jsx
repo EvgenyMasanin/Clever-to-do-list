@@ -1,5 +1,5 @@
 import React from 'react'
-import { Splide, SplideSlide } from '@splidejs/react-splide'
+import { Splide } from '@splidejs/react-splide'
 import CalendarItemContainer from './CalendrItem/CalendarItemContainer';
 
 const Calendar = props => {
@@ -17,7 +17,7 @@ const Calendar = props => {
                 keyboard: false
 
             }}>
-            <CalendarItemContainer days={props.days}/>
+            <CalendarItemContainer days={props.days} />
         </Splide>
     )
 }

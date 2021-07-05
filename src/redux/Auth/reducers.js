@@ -1,10 +1,12 @@
-import { AUTH_CHANGE_EMAIL, AUTH_CHANGE_PASSWORD, AUTHENTICATE, AUTH_SET_IS_SIGNED_IN } from './actions'
+import { AUTH_CHANGE_EMAIL, AUTH_CHANGE_PASSWORD, REGISTRATION_SET_ERROR } from './actions'
 
 const defaultState = {
     email: '',
     password: '',
-    user: {},
-    isSignedIn: false
+    error: {
+        isError: false,
+        errorText: ''
+    }
 }
 
 export const authReducer = (state = defaultState, action) => {
@@ -20,16 +22,10 @@ export const authReducer = (state = defaultState, action) => {
                 ...state,
                 password: action.payload
             };
-        case AUTHENTICATE:
+        case REGISTRATION_SET_ERROR:
             return {
                 ...state,
-                user: action.payload,
-                isSignedIn: true
-            }
-        case AUTH_SET_IS_SIGNED_IN:
-            return {
-                ...state,
-                isSignedIn: action.payload
+                error: action.payload
             }
         default:
             return state;

@@ -2,20 +2,24 @@ import Rebase from 're-base';
 import firebase from 'firebase/app';
 import 'firebase/database';
 import 'firebase/auth';
+// require('dotenv').config()
 
+// console.log(process.env);
+const env = process.env
+console.log(env);
 const firebaseApp = firebase.initializeApp({
     // apiKey: "AIzaSyDD-ppPglGnf-kl5fmMrDFRj96L_7paZvQ",
     // authDomain: "clever-to-do-list-e5328.firebaseapp.com",
     // databaseURL: 'https://clever-to-do-list-e5328.firebaseapp.com'
 
     
-    apiKey: "AIzaSyDD-ppPglGnf-kl5fmMrDFRj96L_7paZvQ",
-    authDomain: "clever-to-do-list-e5328.firebaseapp.com",
-    databaseURL: "https://clever-to-do-list-e5328-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "clever-to-do-list-e5328",
-    storageBucket: "clever-to-do-list-e5328.appspot.com",
-    messagingSenderId: "334477027612",
-    appId: "1:334477027612:web:a255cc289814ec50a5b2d9"
+    apiKey: env.REACT_APP_API_KEY,
+    authDomain: env.REACT_APP_AUTH_DOMAIN,
+    databaseURL: env.REACT_APP_DATABASE_URL,
+    projectId: env.REACT_APP_PROJECT_ID,
+    storageBucket: env.REACT_APP_STORAGE_BUCKET,
+    messagingSenderId: env.REACT_APP_MESSAGING_SENDER_ID,
+    appId: env.REACT_APP_APP_ID
 });
 
 const base = Rebase.createClass(firebaseApp.database());

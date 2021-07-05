@@ -1,29 +1,32 @@
 import React from 'react';
 import Login from './Login';
+import ErrorFormContainer from '../ErrorForm/ErrorFormContainer';
 import { setEmail, setPassword, setUser } from '../../redux/Auth/actions'
 import { connect } from 'react-redux';
 
-class LoginContainer extends React.Component {
+const LoginContainer = props => {
 
-    render() {
-        return (
+    return (
+        <>
             <Login
-                email={this.props.email}
-                password={this.props.password}
-                setEmail={this.props.setEmail}
-                setPassword={this.props.setPassword}
-                setUser={this.props.setUser}
-                authenticate={this.props.authenticate}
+                email={props.email}
+                password={props.password}
+                setEmail={props.setEmail}
+                setPassword={props.setPassword}
+                setUser={props.setUser}
             />
-        )
-    }
+
+            {props.error.isError && <ErrorFormContainer />}
+        </>
+    )
 }
-// засовывает пропсы в LoginContainer
+
 const mapStateToProvider = state => {
     return {
         email: state.auth.email,
         password: state.auth.password,
-        user: state.auth.user
+        user: state.auth.user,
+        error: state.auth.error
     }
 }
 

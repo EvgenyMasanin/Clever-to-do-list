@@ -1,24 +1,35 @@
 import React from 'react'
 import { connect, useSelector } from 'react-redux'
-import { setTask, setTitle, setDescription } from '../../../../../redux/TasksData/actions'
+import { setTask, setTitle, setDescription, clearFields } from '../../../../../redux/TasksData/actions'
 import TaskForm from './TaskForm'
 
 const TaskFormContainer = props => {
-    const date = useSelector(state => state.calendar.currentDate)
+    const {date, user} = useSelector(state => ({
+        date: state.calendar.currentDate,
+        user: state.userData.user
+    }))
+
     const handleCreateTask = (title, description) => {
-        console.log(date);
-        props.setTask(title, description, date)
+        props.setTask(user, title, description, date)
+    }
+    
+    const handleClose = () => {
+        props.clearFields()
+        props.handleClose()
     }
 
     return (
         <TaskForm
-            handleClose={props.handleClose}
+            handleClose={handleClose}
             handleCreateTask={handleCreateTask}
+            handleEditTask={props.handleEditTask}
             setTitle={props.setTitle}
             setDescription={props.setDescription}
+            clearFields={props.clearFields}
             title={props.title}
             description={props.description}
             open={props.open}
+            textContent={props.textContent}
         />
     )
 }
@@ -34,7 +45,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
     setTask,
     setTitle,
-    setDescription
+    setDescription,
+    clearFields
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TaskFormContainer);

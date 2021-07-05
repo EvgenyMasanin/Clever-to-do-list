@@ -3,7 +3,6 @@ import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogAc
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
 const TaskForm = props => {
-
     const handleTitle = (event) => {
         props.setTitle(event.target.value)
     }
@@ -12,18 +11,26 @@ const TaskForm = props => {
         props.setDescription(event.target.value)
     }
 
-    const handleCreateTask = () => {
-        props.handleCreateTask(props.title, props.description)
-        props.handleClose()
+    const handleTask = () => {
+        if (props.handleEditTask) {
+            props.handleEditTask()
+            props.handleClose()
+        } else {
+            props.handleCreateTask(props.title, props.description)
+            props.handleClose()
+        }
+
     }
 
     return (
         <Dialog open={props.open} onClose={props.handleClose} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">Task</DialogTitle>
+            <DialogTitle id="form-dialog-title">{props.textContent.title}</DialogTitle>
             <DialogContent>
+                
                 <DialogContentText>
                     Task title
                 </DialogContentText>
+                
                 <TextField
                     autoFocus
                     margin="dense"
@@ -33,9 +40,11 @@ const TaskForm = props => {
                     value={props.title}
                     onChange={handleTitle}
                 />
+                
                 <DialogContentText>
                     Task text
                 </DialogContentText>
+                
                 <TextareaAutosize
                     aria-label="empty textarea"
                     style={{
@@ -45,13 +54,16 @@ const TaskForm = props => {
                     value={props.description}
                     onChange={handleDescription}
                 />
+
             </DialogContent>
+            
             <DialogActions>
                 <Button onClick={props.handleClose} color="primary">
                     Cancel
                 </Button>
-                <Button onClick={handleCreateTask} color="primary">
-                    Add
+                
+                <Button onClick={handleTask} color="primary">
+                    {props.textContent.buttonText}
                 </Button>
             </DialogActions>
         </Dialog>

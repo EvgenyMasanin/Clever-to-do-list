@@ -1,7 +1,8 @@
 import React from 'react'
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -20,20 +21,26 @@ const Header = props => {
     return (
         <Grid container className={classes.root} component='header'>
             <Grid item className={classes.gridItem} xs={2}>
+
                 <Typography variant='h4'>
                     Tasker
+
                 </Typography>
             </Grid>
-            <Grid item className={classes.gridItem} xs={8}></Grid>
-            <Grid item className={classes.gridItem} xs={2}>
+
+            <Grid item className={classes.gridItem} xs={7} />
+
+            <Grid item className={classes.gridItem} xs={3}>
                 <Button
                     variant="contained"
                     color="primary"
+                    startIcon={<ExitToAppIcon />}
                     onClick={props.signOut}
-                    >SignOut</Button>
+                >
+                    SignOut
+                </Button>
             </Grid>
         </Grid>
-        
     )
 }
 

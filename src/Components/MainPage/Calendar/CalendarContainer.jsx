@@ -19,11 +19,11 @@ function generateCalendar() {
         })
         now.setDate(now.getDate() + 1);
     }
-
     return days
 }
 
 const CalendarContainer = () => {
+
     return (
         <Calendar days={generateCalendar()} />
     )

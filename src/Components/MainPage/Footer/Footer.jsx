@@ -1,19 +1,22 @@
 import React from 'react'
+import { Grid } from '@material-ui/core'
 import AddTaskButtonContainer from './AddTaskButton/AddTaskButtonContainer'
-
 const Footer = () => {
+
     return (
         <footer style={{
-            // position: 'absolute', 
-            // bottom: 0,
-            // right: 0,
-            // left: 0, 
-            padding: 10, 
-            // paddingBottom: 30,
+            padding: 10,
             display: 'flex',
             justifyContent: 'center'
         }}>
-            <AddTaskButtonContainer />
+            <Grid container>
+                <Grid item xs={3} />
+                <Grid item xs={6}>
+                    <AddTaskButtonContainer />
+                </Grid>
+                <Grid item xs={3} />
+            </Grid>
+
         </footer>
     )
 }

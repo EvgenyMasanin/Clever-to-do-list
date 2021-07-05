@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 
 const SignUp = (props) => {
     return (
-        props.isSignedIn ? (
+        props.authorized ? (
             <Redirect to="/" />
         ) : (
             <RegistrationContainer />
@@ -16,7 +16,8 @@ const SignUp = (props) => {
 const mapStateToProvider = state => {
     return {
         user: state.registration.user,
-        isSignedIn: state.registration.isSignedIn,
+        // isSignedIn: state.registration.isSignedIn,
+        authorized: state.userData.authorized,
     }
 }
 

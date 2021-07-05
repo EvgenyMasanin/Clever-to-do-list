@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import rootReducer from './redux/reducers'
 import thunk from 'redux-thunk'
 import { BrowserRouter, Route } from "react-router-dom";
-import MainPageContsiner from './Components/MainPage/MainPageContainer';
+import MainPageContainer from './Components/MainPage/MainPageContainer';
 import '@splidejs/splide/dist/css/themes/splide-default.min.css';
 import SignUp from './Components/Registration/SignUp';
 
@@ -17,7 +17,7 @@ function App() {
             <BrowserRouter>
                 <div className="App">
                     <Route exact path="/" render={() => (
-                        <MainPageContsiner />
+                        <MainPageContainer />
                     )} />
                     <Route path='/signUp' render={() => (
                         <SignUp />

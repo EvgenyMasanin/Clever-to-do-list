@@ -1,54 +1,58 @@
-import React, { useEffect } from 'react'
-import { setUser, setIsSignedIn } from '../../redux/Auth/actions'
-import { setIsSignedIn as setIsSignedInReg } from '../../redux/Registration/actions'
-import { connect, useSelector } from 'react-redux';
+import React, { useEffect, useCallback } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
 import firebase from 'firebase/app';
-import { useAuthState } from 'react-firebase-hooks/auth'
+import { useAuthState, } from 'react-firebase-hooks/auth'
+import { } from 'react-firebase-hooks/database'
 import MainPage from "./MainPage";
 import { Redirect } from 'react-router';
 import { getTask } from '../../redux/TasksData/actions';
-import { setCurrentDate } from '../../redux/Calendar/actions';
+import { setAuthorized } from '../../redux/UserData/actions';
+import { CircularProgress } from '@material-ui/core';
 
-const MainPageContainer = props => {
+const MainPageContainer = () => {
+    const { date, user, authorized } = useSelector(state => ({
+        date: state.calendar.currentDate,
+        user: state.userData.user,
+        authorized: state.userData.authorized,
+    }))
 
-    const date = useSelector(state => state.calendar.currentDate)
+    const dispatch = useDispatch()
 
-    useEffect(() => {
-        // props.setCurrentDate(date)
-        // console.log(date);
-        props.getTask(date)
-    }, [date])
+    // const dispatch = useCallback(
+    //     useDispatch(),
+    //     []
+    // )
 
     const signOut = () => {
         firebase.auth().signOut()
-        props.setIsSignedInReg(false)
-        console.log();
     }
 
-    //FIXME:
     useEffect(() => {
         firebase.auth().onAuthStateChanged(user => {
             if (user) {
-                props.setIsSignedIn(true)
+                console.log(123);
+                dispatch(setAuthorized(user, true))
             }
             else {
-                props.setIsSignedIn(false)
+                dispatch(setAuthorized({}, false))
             }
         })
-    }, [])
+    }, [dispatch])
+
+    useEffect(() => {
+        if (authorized) {
+            dispatch(getTask(user, date))
+        }
+    }, [authorized, date, user, dispatch])
 
     const [, loading] = useAuthState(firebase.auth())
 
     if (loading) {
-        return <div>Loading</div>
+        return <CircularProgress style={{ alignSelf: 'center' }} />
     }
     return (
-        props.isSignedIn ? (
+        authorized ? (
             <MainPage
-                user={props.user}
-                isSignedIn={props.isSignedIn}
-                setUser={props.setUser}
-                setIsSignedIn={props.setIsSignedIn}
                 signOut={signOut}
             />
         ) : (
@@ -57,22 +61,4 @@ const MainPageContainer = props => {
     )
 }
 
-const mapStateToProps = state => {
-    return {
-        user: state.auth.user,
-        isSignedIn: state.auth.isSignedIn,
-        tasks: state.taskData.tasks,
-        date: state.calendar.currentDate
-    }
-}
-
-const mapDispatchToProps = {
-    setUser,
-    setIsSignedIn,
-    setIsSignedInReg,
-    getTask,
-    setCurrentDate
-}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(MainPageContainer);
+export default MainPageContainer;

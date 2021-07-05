@@ -4,9 +4,8 @@ import { connect } from 'react-redux';
 import { Redirect } from "react-router-dom";
 
 const SignIn = (props) => {
-
     return (
-        props.isSignedIn ? (
+        props.authorized ? (
             <Redirect to="/" />
         ) : (
             <LoginContainer />
@@ -17,10 +16,9 @@ const SignIn = (props) => {
 const mapStateToProvider = state => {
     return {
         user: state.auth.user,
-        isSignedIn: state.auth.isSignedIn
+        authorized: state.userData.authorized,
+        state: state
     }
 }
 
 export default connect(mapStateToProvider)(SignIn);
-
-// export default SignIn;
